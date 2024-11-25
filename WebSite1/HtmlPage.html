@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>互動式圖片地圖</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh; /* 全螢幕高度 */
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // 地圖容器
+        const map = L.map('map', {
+            crs: L.CRS.Simple, // 使用簡單座標系
+            minZoom: -2, // 支援多層縮放
+        });
+
+        // 圖片的實際尺寸（例如 2000x1000 像素）
+        const imageWidth = 3507;
+        const imageHeight = 2480;
+        const bounds = [[0, 0], [imageHeight, imageWidth]]; // 圖片邊界
+
+        // 添加圖片作為地圖圖層
+        const imageLayer = L.imageOverlay('成大施工地圖.png', bounds).addTo(map);
+
+        // 設定初始視野（完整顯示整張圖）
+        map.fitBounds(bounds);
+
+        // 添加標記
+        const marker = L.marker([500, 1000]).addTo(map); // 自訂位置（以像素為單位）
+        marker.bindPopup("<b>此為標記位置</b><br>點擊查看更多資訊.");
+    </script>
+</body>
+</html>
